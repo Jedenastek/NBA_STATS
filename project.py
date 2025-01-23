@@ -195,7 +195,7 @@ def get_leaders(year):
     driver.get(url)
     driver.execute_script("window.scroll(1,10000)")
     time.sleep(2)
-    html = driver.page_source
+    return driver.page_source
 
 #given the html file searches of tables with certain id and prints top3 in (per game): points, assists, rebounds, blocks and win shares
 def find_leaders(year):
