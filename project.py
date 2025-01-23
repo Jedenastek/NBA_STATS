@@ -1,3 +1,4 @@
+from pickle import FALSE
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
@@ -6,13 +7,15 @@ import datetime
 import time
 from pyfiglet import Figlet
 from io import StringIO
-
+from term_image.image import *
 
 figlet = Figlet()
 
 #selenium driver options
 options = webdriver.ChromeOptions()
+options.add_argument("--start-maximized")
 driver = webdriver.Chrome(options=options)
+driver.minimize_window()
 
 #all urls used in this project
 p_s_url = 'https://www.basketball-reference.com/leagues/NBA_{}_per_game.html'
@@ -36,9 +39,9 @@ def main():
     choice = 1
     figlet.setFont(font = 'doom')
     print(figlet.renderText("Welcome  to  my  NBA  webscraper!"))
-    while(choice > 0 and choice < 8):
+    while 0 < choice < 8:
         print("Chose what you want to know: ")
-        print("1.League leaders\t2.Standings\t3.Team roster\t4.Team information\t5.Player stats\t6.League schedule\t7.Exit")
+        print("1.League leaders\n2.Standings\n3.Team roster\n4.Team information\n5.Player stats\n6.League schedule\n7.Exit")
         choice = int(input("Select: "))
         if choice == 1:
             year = int(input("Which year (2003-2024)?: "))
@@ -85,10 +88,6 @@ def main():
         else:
             print(figlet.renderText("Exiting  the  program..."))
             break
-        
-
-
-
 
 #gets (with selenium) html file from points per game section of website and returns it
 def get_player_stats(year):
@@ -137,13 +136,6 @@ def team_inf(team, year):
     soup.find('div', class_ = "prevnext").decompose()
     inf_table = (soup.find('div', attrs={'data-template' : 'Partials/Teams/Summary'})).text
     lines = inf_table.split(' ')
-    for i in range(len(lines)):
-        if(i == len(lines)-2):
-            break
-        if(lines[i].strip() == '' and lines[i+1].strip() == ''):
-            lines.pop(i)
-        else:
-            continue
     print(' '.join(lines))
 
 #gets (with selenium) html file from standings section of website and returns it
