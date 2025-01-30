@@ -47,14 +47,14 @@ def main():
         choice = int(input("Select: "))
         match choice:
             case 1:
-                year = int(input("Which year (2003-2024)?: "))
+                year = int(input("Which year (2003-2025)?: "))
                 if year in years:
                     find_leaders(year)
                 else:
                     print("Invalid year!\n")
                     continue
             case 2:
-                year = int(input("Which year (2003-2024)?: "))
+                year = int(input("Which year (2003-2025)?: "))
                 if year in years:
                     find_league_stands(year)
                 else:
@@ -62,7 +62,7 @@ def main():
                     continue
             case 3:
                 team = input("Type team abbreviation(example: Golden State Warriors = GSW): ")
-                year = int(input("Which year (2003-2024)?: "))
+                year = int(input("Which year (2003-2025)?: "))
                 if (team in team_names) and (year in years):
                     get_team_roster(team, year)
                 else:
@@ -70,7 +70,7 @@ def main():
                     continue
             case 4:
                 team = input("Type team abbreviation(example: Golden State Warriors = GSW): ")
-                year = int(input("Which year (2003-2024)?: "))
+                year = int(input("Which year (2003-2025)?: "))
                 if (team in team_names) and (year in years):
                     team_inf(team, year)
                 else:
@@ -78,13 +78,13 @@ def main():
                     continue
             case 5:
                 name = input("Player name: ")
-                year = int(input("Which year (2003-2024)?: "))
+                year = int(input("Which year (2003-2025)?: "))
                 if name in hof_list:
                     name = name + '*'
                 if year in years:
                     find_player_stats(year, name)
             case 6:
-                year = int(input("Which year (2003-2024)?: "))
+                year = int(input("Which year (2003-2025)?: "))
                 month = input("Which month (october - april): ")
                 if (year in years) and (month in months):
                     find_league_games(year, month)
