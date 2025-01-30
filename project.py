@@ -8,6 +8,8 @@ import time
 from pyfiglet import Figlet
 from io import StringIO
 from term_image.image import *
+import re
+
 
 figlet = Figlet()
 
@@ -43,51 +45,53 @@ def main():
         print("Chose what you want to know: ")
         print("1.League leaders\n2.Standings\n3.Team roster\n4.Team information\n5.Player stats\n6.League schedule\n7.Exit")
         choice = int(input("Select: "))
-        if choice == 1:
-            year = int(input("Which year (2003-2024)?: "))
-            if year in years:
-                find_leaders(year)
-            else:
-                print("Invalid year!\n")
-                continue
-        elif choice == 2:
-            year = int(input("Which year (2003-2024)?: "))
-            if year in years:
-                find_league_stands(year)
-            else:
-                print("Invalid year!\n")
-                continue
-        elif choice == 3:
-            team = input("Type team abbreviation(example: Golden State Warriors = GSW): ")
-            year = int(input("Which year (2003-2024)?: "))
-            if (team in team_names) and (year in years):
-               get_team_roster(team , year)
-            else:
-                print("Invalid team abbreviation or year!")
-                continue
-        elif choice == 4:
-            team = input("Type team abbreviation(example: Golden State Warriors = GSW): ")
-            year = int(input("Which year (2003-2024)?: "))
-            if (team in team_names) and (year in years):
-                team_inf(team , year)
-            else:
-                print("Invalid team abbreviation or year!")
-                continue
-        elif choice == 5:
-            name = input("Player name: ")
-            year = int(input("Which year (2003-2024)?: "))
-            if name in hof_list:
-                name = name + '*'
-            if(year in years):
-                find_player_stats(year, name)
-        elif choice == 6:
-            year = int(input("Which year (2003-2024)?: "))
-            month = input("Which month (october - april): ")
-            if (year in years) and (month in months):
-                find_league_games(year, month)
-        else:
-            print(figlet.renderText("Exiting  the  program..."))
-            break
+        match choice:
+            case 1:
+                year = int(input("Which year (2003-2024)?: "))
+                if year in years:
+                    find_leaders(year)
+                else:
+                    print("Invalid year!\n")
+                    continue
+            case 2:
+                year = int(input("Which year (2003-2024)?: "))
+                if year in years:
+                    find_league_stands(year)
+                else:
+                    print("Invalid year!\n")
+                    continue
+            case 3:
+                team = input("Type team abbreviation(example: Golden State Warriors = GSW): ")
+                year = int(input("Which year (2003-2024)?: "))
+                if (team in team_names) and (year in years):
+                    get_team_roster(team, year)
+                else:
+                    print("Invalid team abbreviation or year!")
+                    continue
+            case 4:
+                team = input("Type team abbreviation(example: Golden State Warriors = GSW): ")
+                year = int(input("Which year (2003-2024)?: "))
+                if (team in team_names) and (year in years):
+                    team_inf(team, year)
+                else:
+                    print("Invalid team abbreviation or year!")
+                    continue
+            case 5:
+                name = input("Player name: ")
+                year = int(input("Which year (2003-2024)?: "))
+                if name in hof_list:
+                    name = name + '*'
+                if year in years:
+                    find_player_stats(year, name)
+            case 6:
+                year = int(input("Which year (2003-2024)?: "))
+                month = input("Which month (october - april): ")
+                if (year in years) and (month in months):
+                    find_league_games(year, month)
+            case _:
+                print(figlet.renderText("Exiting the program..."))
+                break
+    driver.quit()
 
 #gets (with selenium) html file from points per game section of website and returns it
 def get_player_stats(year):
@@ -134,9 +138,15 @@ def team_inf(team, year):
     html = get_team_stats(team, year)
     soup = BeautifulSoup(html, "html.parser")
     soup.find('div', class_ = "prevnext").decompose()
-    inf_table = (soup.find('div', attrs={'data-template' : 'Partials/Teams/Summary'})).text
-    lines = inf_table.split(' ')
-    print(' '.join(lines))
+    inf_tables = soup.find('div', attrs={'data-template' : 'Partials/Teams/Summary'})
+    paragraphs = inf_tables.find_all('p')
+    print("\n")
+    for p in paragraphs:
+        text = p.get_text().strip()
+        text = re.sub(r'\s+', ' ', text)  # Replace multiple spaces with a single space
+        print(f"{text}")
+        print("--------------------")
+
 
 #gets (with selenium) html file from standings section of website and returns it
 def get_league_stands(year):
