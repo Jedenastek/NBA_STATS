@@ -12,9 +12,8 @@ Aplikacja do analizy statystyk zawodników NBA. Projekt umożliwia pobieranie, p
 
 ## Funkcje
 
-- **Pobieranie danych:** Aplikacja pobiera dane o statystykach graczy NBA za pomocą publicznych API.
+- **Pobieranie danych:** Aplikacja pobiera dane o statystykach graczy NBA za parsera
 - **Analiza danych:** Przetwarzanie danych z użyciem Pandas w celu obliczeń, filtracji i analiz.
-- **Wizualizacja:** Generowanie wykresów (np. słupkowych, liniowych) za pomocą Matplotlib, umożliwiające analizę wyników graczy.
 - **Raportowanie:** Generowanie raportów z analizami statystyk graczy na przestrzeni różnych sezonów.
 
 ## Instalacja
