@@ -47,6 +47,3 @@ Aplikacja do analizy statystyk zawodników NBA. Projekt umożliwia pobieranie, p
 - Dodanie możliwości analizy historii kontuzji graczy.
 - Zwiększenie interaktywności wykresów.
 
-## Licencja
-
-Projekt jest dostępny na licencji MIT. Zobacz plik LICENSE dla szczegółów.
